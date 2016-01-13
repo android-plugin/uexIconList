@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta charset="utf-8">
+   <meta name="viewport"
+    content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+		
+	<script type="text/javascript">
+
+	function showOpenResult(opCode, dataType, data){
+        alert(data);
+    }
+    
+    function showJsonData(opCode, dataType, data){
+        alert(data);
+    }
+    
+    function showClose(opCode, dataType, data){
+        alert("close");
+    }
+    
+    function onDelClick(opCode, dataType, data){
+        alert("onDelClick:" + data);
+        uexIconList.delIconItem(data);
+    }
+    
+    function cbRefreshIconList(opCode, dataType, data){
+        alert("cbRefreshIconList:" + data);
+        uexIconList.getCurrentIconList();
+    }
+    
+    function cbGetCurrentIconList(opCode, dataType, data){
+        alert("cbGetCurrentIconList:" + data);
+    }
+    
+    function onLongPress(opCode, dataType, data){
+       // alert("onLongPress:" + data);
+    }
+    
+    function cbAddIconItem(opCode, dataType, data){
+        alert("cbAddIconItem:" + data);
+    }
+    
+    function onTouchDown(opCode, dataType, data){
+       // alert("onTouchDown:" + data);
+       // appcan.window.disableBounce();
+        
+        
+    }
+    
+    function onTouchUp(opCode, dataType, data){
+       // appcan.window.enableBounce();
+       // alert("onTouchUp:" + data);
+    }
+
+	window.uexOnload = function(type){
+		if(type == 0){  
+			uexIconList.cbOpen = showOpenResult;
+            uexIconList.cbClickItem = showJsonData;
+			uexIconList.cbClose = showClose;
+			uexIconList.onDelClick = onDelClick;
+			uexIconList.cbRefreshIconList = cbRefreshIconList;
+            uexIconList.cbGetCurrentIconList = cbGetCurrentIconList;
+            uexIconList.onLongPress = onLongPress;
+            uexIconList.cbAddIconItem = cbAddIconItem;
+            uexIconList.onTouchDown = onTouchDown;
+            uexIconList.onTouchUp = onTouchUp;
+		}
+	}
+	
+	function openIconList(){
+		// alert(window.devicePixelRatio);
+		// alert(window.width / window.devicePixelRatio);
+		// alert(sysWidth / dpi);
+       var s = window.getComputedStyle(document.body, null);
+       var w1 = parseInt(s.width);
+       w1 = Math.round(w1);
+       var h1 = parseInt(s.height);
+       h1 = Math.round(h1 / 4);
+       
+        var dpi = window.devicePixelRatio;//获取屏幕分辨率
+	    var option = {"is_follow_web_roll": "true"};
+        uexIconList.setOption(JSON.stringify(option));
+		var x = document.getElementById("x").value;
+		var y = document.getElementById("y").value;
+		var w = document.getElementById("w").value;
+		var h = document.getElementById("h").value;
+		var line = document.getElementById("line").value;
+		var row = document.getElementById("row").value;
+		
+		
+		var params = {};
+        params.x = x;
+        params.y = y;
+        params.w = w1;
+        params.h = h1;
+        params.line = line;
+        params.row = row;
+        params.backgroundColor = "#FEFEFE";
+        params.titleTextColor = "#9C9C9C";
+        alert(JSON.stringify(params));
+		
+		/*var params = {
+            "x": 0,
+            "y": 100,
+            "w":350,
+            "h":400,
+            "line":2,
+            "row":4,
+            "backgroundColor":"#aabbcc"
+        };*/
+        
+        var items = 
+        {
+            "placeholderImg":"res://1Normal.png",
+            "listItem":[
+                     {
+                     "iconId": "数据1车",
+                     "image": "http://i3.sinaimg.cn/dy/pl/2015-04-16/U6161P1T1D31723340F21DT20150416080804.jpg",
+                     "title": "数据1车",
+                     "isCanDel":"false"
+                     },
+                     {
+                     "iconId": "数据2人",
+                     "image": "http://g.hiphotos.baidu.com/news/crop%3D225%2C71%2C414%2C248%3Bw%3D638/sign=6421f9736e63f62408126343ba76d9cd/aa18972bd40735fa70f33cf39b510fb30f24087c.jpg",
+                     "title": "数据2人",
+                     "isCanMove":"false"
+                     },
+                     {
+                     "iconId": "数据3斧子",
+                     "image": "http://i3.sinaimg.cn/dy/pl/2015-04-16/U6161P1T1D31723288F21DT20150416074653.jpg",
+                     "title": "数据3斧子"
+                     },
+                     {
+                     "iconId": "数据4房",
+                     "image": "http://a4.att.hudong.com/06/63/01300001216886130487639263274.jpg",
+                     "title": "数据4房"
+                     },
+                     {
+                     "iconId": "数据5",
+                     "image": "res://icon.png",
+                     "title": "数据5"
+                     },
+                     {
+                     "iconId": "数据6",
+                     "image": "res://icon.png",
+                     "title": "数据6"
+                     },
+                     {
+                     "iconId": "数据7",
+                     "image": "res://icon.png",
+                     "title": "数据7"
+                     },
+                     {
+                     "iconId": "数据8",
+                     "image": "res://icon.png",
+                     "title": "数据8"
+                     },
+                     {
+                     "iconId": "数据9",
+                     "image": "res://icon.png",
+                     "title": "数据9"
+                     },
+                     {
+                     "iconId": "数据10",
+                     "image": "res://icon.png",
+                     "title": "数据10"
+                     },
+                     {
+                     "iconId": "数据11",
+                     "image": "res://icon.png",
+                     "title": "数据11"
+                     },
+                     {
+                     "iconId": "数据12",
+                     "image": "res://icon.png",
+                     "title": "数据12"
+                     },
+                     {
+                     "iconId": "数据13",
+                     "image": "res://icon.png",
+                     "title": "数据13"
+                     },
+                     {
+                     "iconId": "数据14",
+                     "image": "res://icon.png",
+                     "title": "数据14"
+                     },
+                     {
+                     "iconId": "数据15",
+                     "image": "res://icon.png",
+                     "title": "数据15"
+                     },
+                     {
+                     "iconId": "数据16",
+                     "image": "res://icon.png",
+                     "title": "数据16"
+                     },
+                     {
+                     "iconId": "数据17",
+                     "image": "res://icon.png",
+                     "title": "数据17",
+                     "isCanMove":"false"
+                     }
+                     ]};
+        var option={
+        		is_follow_web_roll:document.getElementById("row").value
+        }
+        uexIconList.setOption(JSON.stringify(option));
+		uexIconList.open(JSON.stringify(params),JSON.stringify(items));
+    }
+	
+	function refreshIconList()
+	{
+	   uexIconList.refreshIconList();
+	}
+	
+	function closeIconList()
+	{
+	   uexIconList.close();
+	}
+	
+	function addIconItem()
+	{
+	   var icon = {
+                     "iconId": "数据19",
+                     "image": "res://icon.png",
+                     "title": "数据19"
+                  };
+	   uexIconList.addIconItem(JSON.stringify(icon));
+	}
+	
+</script>
+</head>
+
+<body id = "body_id">
+
+	<div class="tit">uexIconList对象</div>
+	<div class="conbor">
+		<div class="consj">
+			
+			<span>1.open接口</span>
+			<span>x:</span>
+			<input class="textbox" type="number" id="x" value="0">
+			<span>y:</span>
+			<input class="textbox" type="number" id="y" value="200">
+            <span>width:</span>
+            <input class="textbox" type="text" id="w" value="fill_screen">
+            <span>height:</span>
+            <input class="textbox" type="number" id="h" value="600">
+            <span>行:</span>
+            <input class="textbox" type="number" id="line" value="2">
+            <span>列:</span>
+            <input class="textbox" type="number" id="row" value="4">
+            <span>允许随屏幕滚动:</span>
+            <input class="textbox" type="text" id="is_r" value="true">
+            <input class="btn" type="button" value="打开" onclick="openIconList();"><br><br>
+		
+		    <span>2.addIconItem接口</span><input class="btn" type="button" value="添加" onclick="addIconItem();"><br><br>
+		    <span>3.refreshIconList接口</span><input class="btn" type="button" value="刷新" onclick="refreshIconList();"><br><br>
+		    <span>4.close接口</span><input class="btn" type="button" value="关闭" onclick="closeIconList();"><br><br>
+        
+		</div>
+	</div>
+</body>
+</html>

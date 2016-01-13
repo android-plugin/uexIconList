@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+	<plugin
+        className="org.zywx.wbpalmstar.plugin.uexiconlist.EUExIconList" uexName="uexIconList" >
+        <method name="open" />
+        <method name="setOption" />
+        <method name="addIconItem" />
+        <method name="delIconItem" />
+        <method name="refreshIconList" />
+        <method name="getCurrentIconList" />
+        <method name="close" />
+        <method name="resetFrame" />
+    </plugin>
+</uexplugins>

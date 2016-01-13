@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uexplugins>
+   <!-- plugin uexIconList -->
+    <plugin
+        uexName="uexIconList" version="3.1.3" build="3">
+        <info>3:适配新引擎</info>
+        <build>2:2.添加resetFrame接口以及长按抖动效果。
+                3.修改resetFrame引起崩溃的问题。
+                4.修改添加图标的位置。
+                5.修改传参数刷新的问题。
+                7.修改刷新、resetFrame，图标重影的问题。
+                11.修复插件视图和网页onTouch冲突的问题。
+                12.优化UI布局。</build>
+        <build>1:添加跨页滑动功能。</build>
+        <build>0:1.初始插件。
+                 2.添加长按删除功能。
+                 3.添加拖拽功能。
+                 4.添加addIconList接口，修改cbGetCurrentIconList返回数据的格式。
+                 5.icon配置信息添加属性isCanDel、isCanMove。
+                 6.修改魅族手机下拉出现“hold”字样的问题。
+                 8.添加回调函数cbDelIconItemCompleted。</build>
+    </plugin>
+</uexplugins>

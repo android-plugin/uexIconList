@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>	
+	
+	<!-- uexIconList use -->
+	<color name="plugin_iconlist_color_bg">#EFEFEF</color>
+	<color name="plugin_iconlist_color_app_name">#9C9C9C</color>
+	
+</resources>
