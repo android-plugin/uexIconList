@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/plugin_iconlist_color_bg"
+    android:orientation="vertical" >
+
+    <org.zywx.wbpalmstar.plugin.uexiconlist.view.ScrollLayout
+        android:id="@+id/icon_list_scrolllayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/icon_list_page_indictor"
+        android:layout_gravity="center"
+        android:background="@color/plugin_iconlist_color_bg"
+        android:scaleType="fitXY" />
+
+    <org.zywx.wbpalmstar.plugin.uexiconlist.view.PageIndicator
+        android:id="@+id/icon_list_page_indictor"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/plugin_iconlist_page_indicator_hight"
+        android:layout_alignParentBottom="true"
+        android:background="@color/plugin_iconlist_color_bg"
+        android:gravity="center" />
+
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   
+    <!-- uexIconList use -->
+    <dimen name="plugin_iconlist_icon_size">45dp</dimen>
+    <dimen name="plugin_iconlist_name_hight">25dp</dimen>
+    <dimen name="plugin_iconlist_page_indicator_hight">10dp</dimen>
+    <dimen name="plugin_iconlist_del_app_icon_size">20dp</dimen>
+    <dimen name="plugin_iconlist_del_app_icon_margin_right">3dp</dimen>
+    <dimen name="plugin_iconlist_name_text_size">13sp</dimen>
+
+</resources>
