@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:useLevel="false" >
+    <padding 
+        android:left="1dp" 
+        android:top="1dp" 
+        android:right="1dp" 
+        android:bottom="1dp" />
+    <solid
+        android:color="@color/plugin_iconlist_color_page_indicator_focus" />
+    <size
+        android:width="15dp"
+        android:height="15dp" />
+</shape>

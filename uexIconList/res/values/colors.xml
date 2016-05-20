@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>	
 	
-	<!-- uexIconList use -->
-	<color name="plugin_iconlist_color_bg">#EFEFEF</color>
-	<color name="plugin_iconlist_color_app_name">#9C9C9C</color>
+    <!-- uexIconList use -->
+    <color name="plugin_iconlist_color_bg">#EFEFEF</color>
+    <color name="plugin_iconlist_color_app_name">#9C9C9C</color>
+    <color name="plugin_iconlist_color_page_indicator_focus">#777777</color>
+    <color name="plugin_iconlist_color_page_indicator_normal">#D4DCE6</color>
 	
 </resources>
