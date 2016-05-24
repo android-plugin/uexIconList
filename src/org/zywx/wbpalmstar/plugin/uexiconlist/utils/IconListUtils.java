@@ -338,4 +338,34 @@ public class IconListUtils implements ConstantUtils {
         return isExist;
     }
 
+    /**
+     * 获取反射调用的方法
+     * 
+     * @param className
+     *            类名
+     * @param methodName
+     *            方法名
+     * @param parmTypeList
+     *            参数类型列表
+     * @return
+     */
+    public static Method getReflectionMethod(String className,
+            String methodName,
+            Class<?>[] parmTypeList) {
+        Method mMethod = null;
+        try {
+            Class<?> mClass = Class.forName(className);
+            try {
+                /** 根据methodName, parmList获取所有方法包括public和非public */
+                mMethod = mClass.getDeclaredMethod(methodName, parmTypeList);
+                mMethod.setAccessible(true);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return mMethod;
+    }
+
 }

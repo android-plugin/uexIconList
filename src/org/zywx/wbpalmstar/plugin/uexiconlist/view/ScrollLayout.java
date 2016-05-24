@@ -18,6 +18,8 @@
 
 package org.zywx.wbpalmstar.plugin.uexiconlist.view;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -29,6 +31,7 @@ import org.zywx.wbpalmstar.plugin.uexiconlist.utils.ConstantUtils;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.DensityUtil;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconBean;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconListOption;
+import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconListUtils;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.UIConfig;
 
 import android.annotation.SuppressLint;
@@ -165,6 +168,10 @@ public class ScrollLayout extends ViewGroup
     private boolean resetFrame = false;
     private boolean isDelItem = false;
 
+    /** 反射规避江苏烟草闪屏 */
+    private Method addViewInner;
+    private Method removeViewInternal;
+
     /** 画网格线使用 */
     private Paint framePaint = null;
     private LinkedList<FrameCoordinate> frameCoorList = new LinkedList<FrameCoordinate>();
@@ -228,6 +235,15 @@ public class ScrollLayout extends ViewGroup
         }
         windowManager = (WindowManager) getContext()
                 .getSystemService(Context.WINDOW_SERVICE);
+        if (IconListOption.isInvalidateChild()) {
+            addViewInner = IconListUtils.getReflectionMethod(
+                    "android.view.ViewGroup", "addViewInner",
+                    new Class<?>[] { View.class, int.class, LayoutParams.class,
+                            boolean.class });
+            removeViewInternal = IconListUtils.getReflectionMethod(
+                    "android.view.ViewGroup", "removeViewInternal",
+                    new Class<?>[] { int.class, View.class });
+        }
     }
 
     public void initFramePaint() {
@@ -270,7 +286,21 @@ public class ScrollLayout extends ViewGroup
         if (child.getVisibility() != View.VISIBLE) {
             child.setVisibility(View.VISIBLE);
         }
-        super.addView(child, index, params);
+        if (IconListOption.isInvalidateChild()) {
+            requestLayout();
+            invalidate();
+            try {
+                addViewInner.invoke(this, child, index, params, false);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.addView(child, index, params);
+        }
         int pages = (int) Math.ceil(getChildCount() * 1.0 / itemPerPage);
         if (pages > totalPage) {
             if (this.onAddPage != null) {
@@ -315,23 +345,50 @@ public class ScrollLayout extends ViewGroup
 
     @Override
     public void removeView(View view) {
-        super.removeView(view);
-        int pages = (int) Math.ceil(getChildCount() * 1.0 / itemPerPage);
-        if (pages < totalPage) {
-            if (this.onAddPage != null)
-                onAddPage.onAddOrDeletePage(totalPage, false);
-            totalPage = pages;
-        }
+        removeViewAt(indexOfChild(view));
+        // if(IconListOption.isInvalidateChild())
+        // {
+        //
+        // }
+        // else
+        // {
+        // super.removeView(view);
+        // }
+        // int pages = (int) Math.ceil(getChildCount() * 1.0 / itemPerPage);
+        // if (pages < totalPage) {
+        // if (this.onAddPage != null)
+        // {
+        // onAddPage.onAddOrDeletePage(totalPage, false);
+        // }
+        // totalPage = pages;
+        // }
     }
 
     @Override
     public void removeViewAt(int index) {
-        super.removeViewAt(index);
+        if (IconListOption.isInvalidateChild()) {
+            try {
+                if (removeViewInternal != null) {
+                    removeViewInternal.invoke(this, index, getChildAt(index));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            requestLayout();
+            invalidate();
+        } else {
+            super.removeViewAt(index);
+        }
         int pages = (int) Math.ceil(getChildCount() * 1.0 / itemPerPage);
         if (pages < totalPage) {
             totalPage = pages;
-            if (this.onAddPage != null)
+            if (this.onAddPage != null) {
                 onAddPage.onAddOrDeletePage(totalPage, false);
+            }
         }
     }
 
@@ -660,7 +717,7 @@ public class ScrollLayout extends ViewGroup
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-            postInvalidate();
+            invalidate();
         }
     }
 
@@ -710,6 +767,19 @@ public class ScrollLayout extends ViewGroup
         refreView();
     }
 
+    @Override
+    public void addView(View child, int index) {
+        LayoutParams params = child.getLayoutParams();
+        if (params == null) {
+            params = generateDefaultLayoutParams();
+            if (params == null) {
+                throw new IllegalArgumentException(
+                        "generateDefaultLayoutParams() cannot return null");
+            }
+        }
+        addView(child, index, params);
+    }
+
     // 根据手势绘制不断变化位置的dragView
     private void onDrag(int x, int y) {
         if (dragImageView != null) {
@@ -730,7 +800,9 @@ public class ScrollLayout extends ViewGroup
         if (isIconShake) {
             view.clearAnimation();
         }
-        view.setVisibility(View.INVISIBLE);
+        if (!IconListOption.isInvalidateChild()) {
+            view.setVisibility(View.INVISIBLE);
+        }
         if (temChangPosition != dragPosition) {
             View dragView = getChildAt(temChangPosition);
             if (isIconShake) {
