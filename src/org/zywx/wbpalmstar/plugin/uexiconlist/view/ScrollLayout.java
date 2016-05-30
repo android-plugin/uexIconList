@@ -286,7 +286,7 @@ public class ScrollLayout extends ViewGroup
         if (child.getVisibility() != View.VISIBLE) {
             child.setVisibility(View.VISIBLE);
         }
-        if (IconListOption.isInvalidateChild()) {
+        if (IconListOption.isInvalidateChild() && addViewInner != null) {
             requestLayout();
             invalidate();
             try {
