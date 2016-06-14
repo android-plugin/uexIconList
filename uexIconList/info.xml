@@ -2,7 +2,7 @@
 <uexplugins>
    <!-- plugin uexIconList -->
     <plugin
-        uexName="uexIconList" version="3.1.3.8" build="4">
+        uexName="uexIconList" version="3.1.4" build="4">
         <info>4:1.修改插件随网页滚动时，视图位置、大小没有乘scale的问题;
                   添加Icon带网格的功能，并可配置是否显示网格。
                  5.优化带网格UI。
