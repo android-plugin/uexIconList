@@ -24,8 +24,14 @@
     }
     
     function onDelClick(opCode, dataType, data){
-        alert("onDelClick:" + data);
+       // alert("onDelClick:" + data);
         uexIconList.delIconItem(data);
+        
+       // uexIconList.getCurrentIconList();
+      // reload2Line();
+       
+    //   uexIconList.refreshIconList();
+     //  refreshIconList();
     }
     
     function cbRefreshIconList(opCode, dataType, data){
@@ -38,7 +44,7 @@
     }
     
     function onLongPress(opCode, dataType, data){
-       // alert("onLongPress:" + data);
+        alert("onLongPress:" + data);
     }
     
     function cbAddIconItem(opCode, dataType, data){
@@ -46,7 +52,7 @@
     }
     
     function onTouchDown(opCode, dataType, data){
-       // alert("onTouchDown:" + data);
+        //alert("onTouchDown:" + data);
        // appcan.window.disableBounce();
         
         
@@ -58,7 +64,12 @@
     }
 
 	window.uexOnload = function(type){
-		if(type == 0){  
+		if(type == 0){
+		    uexWidget.onLoadByOtherApp = function(info)
+            {
+		        console.log("onLoadByOtherApp:" + info);
+		        alert("onLoadByOtherApp:" + info);
+            }
 			uexIconList.cbOpen = showOpenResult;
             uexIconList.cbClickItem = showJsonData;
 			uexIconList.cbClose = showClose;
@@ -69,13 +80,260 @@
             uexIconList.cbAddIconItem = cbAddIconItem;
             uexIconList.onTouchDown = onTouchDown;
             uexIconList.onTouchUp = onTouchUp;
+            uexIconList.cbDelIconItemCompleted = function(opid, dataType, json){
+             uexIconList.getCurrentIconList();
+        }
+            
+            uexWindow.setBounce(1);
+//            openIconList();
 		}
 	}
 	
-	function openIconList(){
-		// alert(window.devicePixelRatio);
-		// alert(window.width / window.devicePixelRatio);
-		// alert(sysWidth / dpi);
+	function reload1Line()
+	{
+       var s = window.getComputedStyle(document.body, null);
+       var w1 = parseInt(s.width);
+       w1 = Math.round(w1);
+       var h1 = parseInt(s.height);
+       h1 = Math.round(h1 / 4);
+        var x = document.getElementById("x").value;
+        var y = document.getElementById("y").value;
+        
+        var params = {};
+        params.x = x;
+        params.y = y;
+        params.w = w1;
+        params.h = w1 * 0.32;
+        params.line = 1;
+        params.row = 4;
+        params.backgroundColor = "#FEFEFE";
+        params.titleTextColor = "#ff00ff";
+        params.isShowIconFrame = true;
+        params.iconFrameColor = "#00ff00";
+        
+        alert(JSON.stringify(params));
+        uexIconList.resetFrame(JSON.stringify(params));
+	}
+	
+	function reload2Line()
+    {
+       var s = window.getComputedStyle(document.body, null);
+       var w1 = parseInt(s.width);
+       w1 = Math.round(w1);
+       var h1 = parseInt(s.height);
+       h1 = Math.round(h1 / 4);
+        var x = document.getElementById("x").value;
+        var y = document.getElementById("y").value;
+        
+        var params = {};
+        params.x = x;
+        params.y = y;
+        params.w = w1;
+        params.h = w1 * 0.62;
+        params.line = 2;
+        params.row = 4;
+        params.backgroundColor = "#FEFEFE";
+        params.titleTextColor = "#9C9C9C";
+        params.isShowIconFrame = true;
+        params.iconFrameColor = "#00ff00";
+        
+        alert(JSON.stringify(params));
+        uexIconList.resetFrame(JSON.stringify(params));
+    }
+	
+	var iconListItems = 
+        {
+            "placeholderImg":"res://1Normal.png",
+            "listItem":[
+                     {
+                     "iconId": "数据1车",
+                     "image": "res://icon1.png",
+                     "title": "数据1",
+                     "isCanDel":"false"
+                     },
+                     {
+                     "iconId": "测试图片2",
+                     "image": "res://icon2.png",
+                     "title": "测试图片2",
+                     "isCanMove":"false"
+                     },
+                     {
+                     "iconId": "测试图片3",
+                     "image": "res://icon3.png",
+                     "title": "测试图片3"
+                     },
+                     {
+                     "iconId": "测试图片4",
+                     "image": "res://icon4.png",
+                     "title": "测试图片4"
+                     },
+                     {
+                     "iconId": "数据9",
+                     "image": "res://icon.png",
+                     "title": "数据9"
+                     },
+                     {
+                     "iconId": "数据10",
+                     "image": "res://icon.png",
+                     "title": "数据10"
+                     },
+                     {
+                     "iconId": "数据11",
+                     "image": "res://icon.png",
+                     "title": "数据11"
+                     },
+                     {
+                     "iconId": "数据12",
+                     "image": "res://icon.png",
+                     "title": "数据12"
+                     },
+                     {
+                         "iconId": "测试图片5",
+                         "image": "res://icon5.png",
+                         "title": "测试图片5"
+                     },
+                     {
+                         "iconId": "图标排序测试图片6",
+                         "image": "res://icon6.png",
+                         "title": "图标排序测试图片6"
+                     },
+                     {
+                         "iconId": "图标排序测试图片7",
+                         "image": "res://icon7.png",
+                         "title": "图标排序测试图片7"
+                     },
+                     {
+                     "iconId": "图片8",
+                     "image": "res://icon8.png",
+                     "title": "图片8"
+                     },
+                     {
+                     "iconId": "数据13",
+                     "image": "res://icon.png",
+                     "title": "数据13"
+                     },
+                     {
+                     "iconId": "数据14",
+                     "image": "res://icon.png",
+                     "title": "数据14"
+                     },
+                     {
+                     "iconId": "数据15",
+                     "image": "res://icon.png",
+                     "title": "数据15"
+                     },
+                     {
+                     "iconId": "数据16",
+                     "image": "res://icon.png",
+                     "title": "数据16"
+                     }/*,
+                     {
+                     "iconId": "数据17",
+                     "image": "res://icon.png",
+                     "title": "数据17",
+                     "isCanMove":"true"
+                     }*/
+                     ]};
+	var iconListItems1 = 
+	    {
+	            "placeholderImg":"res://1Normal.png",
+	            "listItem":[
+	                        {
+	                            "iconId": "数据1车",
+	                            "image": "res://icon1.png",
+	                            "title": "数据1",
+	                            "isCanDel":"false"
+	                        },
+	                        {
+	                            "iconId": "测试图片2",
+	                            "image": "res://icon2.png",
+	                            "title": "测试图片2",
+	                            "isCanMove":"false"
+	                        },
+	                        {
+	                            "iconId": "测试图片3",
+	                            "image": "res://icon3.png",
+	                            "title": "测试图片3"
+	                        },
+	                        {
+	                            "iconId": "测试图片4",
+	                            "image": "res://icon4.png",
+	                            "title": "测试图片4"
+	                        },
+	                        {
+	                            "iconId": "数据9",
+	                            "image": "res://icon.png",
+	                            "title": "数据9"
+	                        },
+	                        {
+	                            "iconId": "数据10",
+	                            "image": "res://icon.png",
+	                            "title": "数据10"
+	                        },
+	                        {
+	                            "iconId": "数据11",
+	                            "image": "res://icon.png",
+	                            "title": "数据11"
+	                        },
+	                        {
+	                            "iconId": "数据12",
+	                            "image": "res://icon.png",
+	                            "title": "数据12"
+	                        },
+	                        {
+	                            "iconId": "数据13",
+	                            "image": "res://icon.png",
+	                            "title": "数据13"
+	                        }
+	                        ]};
+	
+	function openIconList1Line(){
+	       // alert(window.devicePixelRatio);
+	      //  alert(window.width / window.devicePixelRatio);
+	       // alert(sysWidth / dpi);
+	       var s = window.getComputedStyle(document.body, null);
+	       var w1 = parseInt(s.width);
+	       w1 = Math.round(w1);
+	       var h1 = parseInt(s.height);
+	       h1 = Math.round(h1 / 8);
+	       
+	        var dpi = window.devicePixelRatio;//获取屏幕分辨率
+	        var option = {"is_follow_web_roll": "false"};
+	        uexIconList.setOption(JSON.stringify(option));
+	        var x = document.getElementById("x").value;
+	        var y = document.getElementById("y").value;
+	        var w = document.getElementById("w").value;
+	        var h = document.getElementById("h").value;
+	        var line = document.getElementById("line").value;
+	        var row = document.getElementById("row").value;
+	        
+	        var params = {};
+	        params.x = x;
+	        params.y = y;
+	        params.w = w1; 
+	        params.h = w1 * 0.62 / 2;
+	        params.line = 1;
+	        params.row = row;
+	        params.backgroundColor = "#FEFEFE";
+	        params.titleTextColor = "#9C9C9C";
+	        params.isShowIconFrame = true;
+	        params.iconFrameColor = "#00ff00";
+	        alert(JSON.stringify(params));
+	        
+	        /*var params = {
+	            "x": 0,
+	            "y": 100,
+	            "w":350,
+	            "h":400,
+	            "line":2,
+	            "row":4,
+	            "backgroundColor":"#aabbcc"
+	        };*/
+	        
+	        uexIconList.open(JSON.stringify(params),JSON.stringify(iconListItems));
+	}
+	
+    function openIconList(){
        var s = window.getComputedStyle(document.body, null);
        var w1 = parseInt(s.width);
        w1 = Math.round(w1);
@@ -83,7 +341,7 @@
        h1 = Math.round(h1 / 4);
        
         var dpi = window.devicePixelRatio;//获取屏幕分辨率
-	    var option = {"is_follow_web_roll": "true"};
+	    var option = {"is_follow_web_roll": "false"};
         uexIconList.setOption(JSON.stringify(option));
 		var x = document.getElementById("x").value;
 		var y = document.getElementById("y").value;
@@ -92,31 +350,58 @@
 		var line = document.getElementById("line").value;
 		var row = document.getElementById("row").value;
 		
-		
 		var params = {};
         params.x = x;
         params.y = y;
-        params.w = w1;
-        params.h = h1;
+        params.w = w1; 
+        params.h = w1 * 0.62;
         params.line = line;
         params.row = row;
         params.backgroundColor = "#FEFEFE";
         params.titleTextColor = "#9C9C9C";
-        alert(JSON.stringify(params));
-		
-		/*var params = {
-            "x": 0,
-            "y": 100,
-            "w":350,
-            "h":400,
-            "line":2,
-            "row":4,
-            "backgroundColor":"#aabbcc"
-        };*/
+        params.isShowIconFrame = true;
+        params.iconFrameColor = "#00ff00";
+        params.iconScale = 0.45;
         
-        var items = 
+		uexIconList.open(JSON.stringify(params),JSON.stringify(iconListItems1));
+    }
+    
+    function openIconListNoFrame(){
+        var s = window.getComputedStyle(document.body, null);
+        var w1 = parseInt(s.width);
+        w1 = Math.round(w1);
+        var h1 = parseInt(s.height);
+        h1 = Math.round(h1 / 4);
+        
+        var dpi = window.devicePixelRatio;//获取屏幕分辨率
+        var option = {"is_follow_web_roll": "true", "isInvalidateChild":"true"};
+        uexIconList.setOption(JSON.stringify(option));
+        var x = document.getElementById("x").value;
+        var y = document.getElementById("y").value;
+        var w = document.getElementById("w").value;
+        var h = document.getElementById("h").value;
+        var line = document.getElementById("line").value;
+        var row = document.getElementById("row").value;
+        
+        var params = {};
+        params.x = x;
+        params.y = y;
+        params.w = w1; 
+        params.h = w1 * 0.62;
+        params.line = line;
+        params.row = row;
+        params.backgroundColor = "#FEFEFE";
+        params.titleTextColor = "#9C9C9C";
+        params.isShowIconFrame = false;
+        params.iconFrameColor = "#00ff00";
+        
+        uexIconList.open(JSON.stringify(params),JSON.stringify(iconListItems));
+    }
+	
+	function refreshIconList()
+	{
+	    var items = 
         {
-            "placeholderImg":"res://1Normal.png",
             "listItem":[
                      {
                      "iconId": "数据1车",
@@ -142,17 +427,17 @@
                      },
                      {
                      "iconId": "数据5",
-                     "image": "res://icon.png",
+                     "image": "http://i3.sinaimg.cn/blog/2014/1029/S129809T1414550868715.jpg",
                      "title": "数据5"
                      },
                      {
                      "iconId": "数据6",
-                     "image": "res://icon.png",
+                     "image": "http://images.china.cn/images1/ch/2014jb/21.jpg",
                      "title": "数据6"
                      },
                      {
                      "iconId": "数据7",
-                     "image": "res://icon.png",
+                     "image": "http://n.sinaimg.cn/transform/20150907/0JY5-fxhqtsx3573757.jpg",
                      "title": "数据7"
                      },
                      {
@@ -200,23 +485,20 @@
                      "image": "res://icon.png",
                      "title": "数据16"
                      },
-                     {
+                    /* {
                      "iconId": "数据17",
                      "image": "res://icon.png",
                      "title": "数据17",
                      "isCanMove":"false"
+                     },*/
+                     {
+                     "iconId": "数据19",
+                     "image": "res://icon.png",
+                     "title": "数据19"
                      }
                      ]};
-        var option={
-        		is_follow_web_roll:document.getElementById("row").value
-        }
-        uexIconList.setOption(JSON.stringify(option));
-		uexIconList.open(JSON.stringify(params),JSON.stringify(items));
-    }
-	
-	function refreshIconList()
-	{
-	   uexIconList.refreshIconList();
+	   uexIconList.refreshIconList(JSON.stringify(iconListItems1));
+
 	}
 	
 	function closeIconList()
@@ -226,12 +508,15 @@
 	
 	function addIconItem()
 	{
+	
 	   var icon = {
                      "iconId": "数据19",
                      "image": "res://icon.png",
                      "title": "数据19"
                   };
-	   uexIconList.addIconItem(JSON.stringify(icon));
+       uexIconList.addIconItem(JSON.stringify(icon));
+      // reload1Line();
+      // uexIconList.refreshIconList(JSON.stringify(items));
 	}
 	
 </script>
@@ -256,13 +541,16 @@
             <input class="textbox" type="number" id="line" value="2">
             <span>列:</span>
             <input class="textbox" type="number" id="row" value="4">
-            <span>允许随屏幕滚动:</span>
-            <input class="textbox" type="text" id="is_r" value="true">
-            <input class="btn" type="button" value="打开" onclick="openIconList();"><br><br>
+            <input class="btn" type="button" value="打开" onclick="openIconList();"><br>
+            <input class="btn" type="button" value="打开(无边框)" onclick="openIconListNoFrame();"><br>
+            <input class="btn" type="button" value="打开（1行）" onclick="openIconList1Line();"><br>
 		
 		    <span>2.addIconItem接口</span><input class="btn" type="button" value="添加" onclick="addIconItem();"><br><br>
-		    <span>3.refreshIconList接口</span><input class="btn" type="button" value="刷新" onclick="refreshIconList();"><br><br>
-		    <span>4.close接口</span><input class="btn" type="button" value="关闭" onclick="closeIconList();"><br><br>
+            <span>3.refreshIconList接口</span><input class="btn" type="button" value="刷新" onclick="refreshIconList();"><br><br>
+            <span>4.close接口</span><input class="btn" type="button" value="关闭" onclick="closeIconList();"><br><br>
+            <span>5.reload接口(1行)</span><input class="btn" type="button" value="reload" onclick="reload1Line();"><br><br>
+            <span>6.reload接口(2行)</span><input class="btn" type="button" value="reload" onclick="reload2Line();"><br><br>
+            <span>7.获取当前数据</span><input class="btn" type="button" value="确定" onclick="uexIconList.getCurrentIconList();"><br><br>
         
 		</div>
 	</div>

@@ -2,15 +2,20 @@
 <uexplugins>
    <!-- plugin uexIconList -->
     <plugin
-        uexName="uexIconList" version="3.1.3" build="3">
-        <info>3:适配新引擎</info>
+        uexName="uexIconList" version="3.1.4" build="4">
+        <info>4:1.修改插件随网页滚动时，视图位置、大小没有乘scale的问题;
+                  添加Icon带网格的功能，并可配置是否显示网格。
+                 5.优化带网格UI。
+                 6.修复特定情况下，插件view翻页，网页闪屏的问题。
+                 7.修复特定情况下，拖拽图标，网页闪屏的问题。</info>
+        <build>3:适配新引擎</build>
         <build>2:2.添加resetFrame接口以及长按抖动效果。
-                3.修改resetFrame引起崩溃的问题。
-                4.修改添加图标的位置。
-                5.修改传参数刷新的问题。
-                7.修改刷新、resetFrame，图标重影的问题。
-                11.修复插件视图和网页onTouch冲突的问题。
-                12.优化UI布局。</build>
+                 3.修改resetFrame引起崩溃的问题。
+                 4.修改添加图标的位置。
+                 5.修改传参数刷新的问题。
+                 7.修改刷新、resetFrame，图标重影的问题。
+                 11.修复插件视图和网页onTouch冲突的问题。
+                 12.优化UI布局。</build>
         <build>1:添加跨页滑动功能。</build>
         <build>0:1.初始插件。
                  2.添加长按删除功能。
