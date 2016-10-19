@@ -38,13 +38,13 @@ import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsoluteLayout;
+import android.widget.AbsoluteLayout.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -97,7 +97,7 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
         try {
             if (params.length >= 2) {
                 IconListUtils.setUIConfig(params[OPEN_UI_CONFIG],
-                        getWebViewScale());
+                        IconListUtils.getWebScale(mBrwView));
                 UIConfig.setScale();
                 String result = openIconList(params[OPEN_DATA_CONFIG]);
                 if ("".equals(result)) {
@@ -124,19 +124,10 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
     public void resetFrame(String[] params) {
         LogUtils.logDebug(true, "into resetFrame");
         if (params.length >= 1) {
-            IconListUtils.setUIConfig(params[0], getWebViewScale());
+            IconListUtils.setUIConfig(params[0],
+                    IconListUtils.getWebScale(mBrwView));
             resetFrame();
         }
-    }
-
-    private float getWebViewScale() {
-        float nowScale = 1.0f;
-        int versionA = Build.VERSION.SDK_INT;
-
-        if (versionA <= 18) {
-            nowScale = mBrwView.getScale();
-        }
-        return nowScale;
     }
 
     /**
@@ -157,19 +148,32 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
                     ViewGroup subView = (ViewGroup) activity.getWindow()
                             .getDecorView();
                     if (IconListOption.isFollowWebRoll()) {
-                        AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(
-                                (int) UIConfig.getScaleWidth(),
-                                (int) UIConfig.getScaleHight(),
-                                (int) UIConfig.getScaleX(),
-                                (int) UIConfig.getScaleY());
-                        subView.setLayoutParams(lp);
+                        AbsoluteLayout.LayoutParams lParams = (LayoutParams) subView
+                                .getLayoutParams();
+                        lParams.width = (int) UIConfig.getScaleWidth();
+                        lParams.height = (int) UIConfig.getScaleHight();
+                        lParams.x = (int) UIConfig.getScaleX();
+                        lParams.y = (int) UIConfig.getScaleY();
+//                        AbsoluteLayout.LayoutParams lp = new AbsoluteLayout.LayoutParams(
+//                                (int) UIConfig.getScaleWidth(),
+//                                (int) UIConfig.getScaleHight(),
+//                                (int) UIConfig.getScaleX(),
+//                                (int) UIConfig.getScaleY());
+                        subView.setLayoutParams(lParams);
                     } else {
-                        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                                (int) UIConfig.getScaleWidth(),
-                                (int) UIConfig.getScaleHight());
-                        lp.leftMargin = (int) UIConfig.getScaleX();
-                        lp.topMargin = (int) UIConfig.getScaleY();
-                        subView.setLayoutParams(lp);
+                        FrameLayout.LayoutParams lParams = (FrameLayout.LayoutParams) subView
+                                .getLayoutParams();
+                        lParams.width = (int) UIConfig.getScaleWidth();
+                        lParams.height = (int) UIConfig.getScaleHight();
+                        lParams.leftMargin = (int) UIConfig.getScaleX();
+                        lParams.topMargin = (int) UIConfig.getScaleY();
+                        // FrameLayout.LayoutParams lp = new
+                        // FrameLayout.LayoutParams(
+                        // (int) UIConfig.getScaleWidth(),
+                        // (int) UIConfig.getScaleHight());
+                        // lp.leftMargin = (int) UIConfig.getScaleX();
+                        // lp.topMargin = (int) UIConfig.getScaleY();
+                        subView.setLayoutParams(lParams);
                     }
                     subView.invalidate();
                     mEuExIconListHandler.send2Callback(WHAT_RESET_FRAME, null);
@@ -219,8 +223,7 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
                             if (viewGroup != null) {
                                 viewGroup.removeView(marketDecorView);
                             }
-                            /** 此方法引擎中对xywh已做处理，所以lp的xywh不需要乘scale */
-                            addViewToWebViewUexIconList(marketDecorView, lp,
+                            addViewToWebView(marketDecorView, lp,
                                     IconListActivity.TAG);
                         } else {
                             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
@@ -228,7 +231,6 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
                                     (int) UIConfig.getHight());
                             lp.leftMargin = (int) UIConfig.getX();
                             lp.topMargin = (int) UIConfig.getY();
-                            /** 此方法引擎中对xywh已做处理，所以lp的xywh不需要乘scale */
                             addViewToCurrentWindow(marketDecorView, lp);
                         }
                         isIconListOpened = true;
@@ -245,47 +247,6 @@ public class EUExIconList extends EUExBase implements ConstantUtils {
             errorMsg = ERROR_MSG_ALREADY_OPEN;
         }
         return errorMsg;
-    }
-
-    /**
-     * 将View嵌入到webview随view一起滚动
-     *
-     * @param child
-     * @param params
-     * @param id
-     *            标识要添加的view，删除时会用到
-     */
-    private void addViewToWebViewUexIconList(View child,
-            AbsoluteLayout.LayoutParams params, String id) {
-        float nowScale = 1.0f;
-        int versionA = Build.VERSION.SDK_INT;
-
-        if (versionA <= 18) {
-            nowScale = mBrwView.getScale();
-        }
-        float sc = nowScale;
-        int x = (int) (params.x * sc);
-        int y = (int) (params.y * sc);
-        int w = params.width;
-        int h = params.height;
-        if (w > 0) {
-            w = (int) (params.width * sc);
-        }
-        if (h > 0) {
-            h = (int) (params.height * sc);
-        }
-        params.x = x;
-        params.y = y;
-        params.width = w;
-        params.height = h;
-
-        if (mBrwView == null) {
-            return;
-        }
-        if (id != null) {
-            child.setTag(id);
-        }
-        mBrwView.addView(child, params);
     }
 
     /**
