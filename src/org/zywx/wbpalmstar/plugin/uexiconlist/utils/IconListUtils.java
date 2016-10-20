@@ -21,6 +21,7 @@ package org.zywx.wbpalmstar.plugin.uexiconlist.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.util.LinkedList;
@@ -377,26 +378,25 @@ public class IconListUtils implements ConstantUtils {
      * @return
      */
     public static float getWebScale(EBrowserView mBrwView) {
-        // float scale = 1.0f;
-        // try {
-        // Method gatScale = EBrowserView.class.getMethod("getCustomScale",
-        // null);
-        // try {
-        // scale = (Float) gatScale.invoke(mBrwView, null);
-        // } catch (IllegalAccessException e) {
-        // e.printStackTrace();
-        // } catch (IllegalArgumentException e) {
-        // e.printStackTrace();
-        // } catch (InvocationTargetException e) {
-        // e.printStackTrace();
-        // }
-        // } catch (NoSuchMethodException e) {
-        // e.printStackTrace();
-        // scale = getWebScaleOld(mBrwView);
-        // }
+        float scale = 1.0f;
+        try {
+            Method gatScale = EBrowserView.class.getMethod("getCustomScale",
+                    null);
+            try {
+                scale = (Float) gatScale.invoke(mBrwView, null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            scale = getWebScaleOld(mBrwView);
+        }
 
-        // return scale;
-        return getWebScaleOld(mBrwView);
+        return scale;
     }
 
     private static float getWebScaleOld(EBrowserView mBrwView) {
