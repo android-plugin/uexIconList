@@ -31,6 +31,7 @@ import org.zywx.wbpalmstar.plugin.uexiconlist.utils.DensityUtil;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconBean;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconListUtils;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.UIConfig;
+import org.zywx.wbpalmstar.plugin.uexiconlist.view.OnDataChangeListener;
 import org.zywx.wbpalmstar.plugin.uexiconlist.view.ScrollLayout;
 import org.zywx.wbpalmstar.plugin.uexiconlist.view.ScrollLayout.SAdapter;
 
@@ -209,10 +210,6 @@ public class IconAdapter implements SAdapter, ConstantUtils {
     }
 
     private OnDataChangeListener dataChangeListener = null;
-
-    public interface OnDataChangeListener {
-        void ondataChange();
-    }
 
     public OnDataChangeListener getOnDataChangeListener() {
         return dataChangeListener;

@@ -26,7 +26,6 @@ import java.util.LinkedList;
 import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
 import org.zywx.wbpalmstar.plugin.uexiconlist.EUExIconList;
 import org.zywx.wbpalmstar.plugin.uexiconlist.IconAdapter;
-import org.zywx.wbpalmstar.plugin.uexiconlist.IconAdapter.OnDataChangeListener;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.ConstantUtils;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.DensityUtil;
 import org.zywx.wbpalmstar.plugin.uexiconlist.utils.IconBean;
