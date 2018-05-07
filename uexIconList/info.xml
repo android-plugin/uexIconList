@@ -2,12 +2,15 @@
 <uexplugins>
    <!-- plugin uexIconList -->
     <plugin
-        uexName="uexIconList" version="3.1.4" build="4">
-        <info>4:1.修改插件随网页滚动时，视图位置、大小没有乘scale的问题;
-                  添加Icon带网格的功能，并可配置是否显示网格。
+        uexName="uexIconList" version="3.1.4.5" build="5">
+        <info>5:2.修复resetFrame时由LayoutParams引起的崩溃问题。
+                3.修复随网页滚动功能不起作用的问题。
+                4.适配X5引擎。</info>
+        <build>4:1.修改插件随网页滚动时，视图位置、大小没有乘scale的问题;
+                   添加Icon带网格的功能，并可配置是否显示网格。
                  5.优化带网格UI。
                  6.修复特定情况下，插件view翻页，网页闪屏的问题。
-                 7.修复特定情况下，拖拽图标，网页闪屏的问题。</info>
+                 7.修复特定情况下，拖拽图标，网页闪屏的问题。</build>
         <build>3:适配新引擎</build>
         <build>2:2.添加resetFrame接口以及长按抖动效果。
                  3.修改resetFrame引起崩溃的问题。

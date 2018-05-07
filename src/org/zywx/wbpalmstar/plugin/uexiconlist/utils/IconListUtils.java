@@ -21,6 +21,7 @@ package org.zywx.wbpalmstar.plugin.uexiconlist.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.util.LinkedList;
@@ -33,11 +34,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zywx.wbpalmstar.base.BUtility;
+import org.zywx.wbpalmstar.engine.EBrowserView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.text.TextUtils;
 
 public class IconListUtils implements ConstantUtils {
@@ -366,6 +369,43 @@ public class IconListUtils implements ConstantUtils {
             e.printStackTrace();
         }
         return mMethod;
+    }
+
+    /**
+     * getCustomScale：引擎中添加的获取x5内核网页scale的方法，为兼容旧引擎，故使用反射调用
+     * 
+     * @param mBrwView
+     * @return
+     */
+    public static float getWebScale(EBrowserView mBrwView) {
+        float scale = 1.0f;
+        try {
+            Method gatScale = EBrowserView.class.getMethod("getCustomScale",
+                    null);
+            try {
+                scale = (Float) gatScale.invoke(mBrwView, null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            scale = getWebScaleOld(mBrwView);
+        }
+
+        return scale;
+    }
+
+    private static float getWebScaleOld(EBrowserView mBrwView) {
+        float nowScale = 1.0f;
+        int versionA = Build.VERSION.SDK_INT;
+        if (versionA <= 18) {
+            nowScale = mBrwView.getScale();
+        }
+        return nowScale;
     }
 
 }
