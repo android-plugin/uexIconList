@@ -372,7 +372,7 @@ public class IconListUtils implements ConstantUtils {
     }
 
     /**
-     * getCustomScale：引擎中添加的获取x5内核网页scale的方法，为兼容旧引擎，故使用反射调用
+     * getScaleWrap：4.0引擎中添加的获取x5内核网页scale的方法，为兼容旧引擎，故使用反射调用
      * 
      * @param mBrwView
      * @return
@@ -380,10 +380,38 @@ public class IconListUtils implements ConstantUtils {
     public static float getWebScale(EBrowserView mBrwView) {
         float scale = 1.0f;
         try {
-            Method gatScale = EBrowserView.class.getMethod("getCustomScale",
-                    null);
+            Method gatScale = EBrowserView.class.getMethod("getScaleWrap",
+                    (Class<?>[]) null);
             try {
-                scale = (Float) gatScale.invoke(mBrwView, null);
+                scale = (Float) gatScale.invoke(mBrwView, (Object[]) null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            scale = getWebScaleEngine3(mBrwView);
+        }
+
+        return scale;
+    }
+
+    /**
+     * getCustomScale：3.0引擎中添加的获取x5内核网页scale的方法，为兼容旧引擎，故使用反射调用
+     *
+     * @param mBrwView
+     * @return
+     */
+    public static float getWebScaleEngine3(EBrowserView mBrwView) {
+        float scale = 1.0f;
+        try {
+            Method gatScale = EBrowserView.class.getMethod("getCustomScale",
+                    (Class<?>[]) null);
+            try {
+                scale = (Float) gatScale.invoke(mBrwView, (Object[]) null);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
